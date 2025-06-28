@@ -1,9 +1,14 @@
+"""
+Forms for creating and editing contacts.
+"""
+
 from django.forms import ModelForm, CharField, EmailField, TextInput, DateField, DateInput
 from phonenumber_field.formfields import PhoneNumberField
 from .models import Contact
 
 
 class ContactForm(ModelForm):
+    """Form for creating or editing a contact."""
     first_name = CharField(
         min_length=2,
         max_length=150,
@@ -26,18 +31,11 @@ class ContactForm(ModelForm):
         required=True,
         widget=TextInput(attrs={'placeholder': '+380xxxxxxxxx'})
     )
-    # birthday = CharField(
-    #     max_length=50,
-    #     required=False,
-    #     widget=TextInput(attrs={'placeholder': 'YYYY-MM-DD'})
-    # )
-
     birthday = DateField(
         required=False,
         widget=DateInput(attrs={'placeholder': 'YYYY-MM-DD'}),
         input_formats=['%Y-%m-%d']
     )
-
 
     class Meta:
         model = Contact

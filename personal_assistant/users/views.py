@@ -1,3 +1,7 @@
+"""
+Views for user authentication, profile management, and password reset.
+"""
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -18,6 +22,7 @@ from .forms import (
 
 
 def signup(request):
+    """Handle user registration."""
     if request.user.is_authenticated:
         return redirect(to="contacts:contact_view")
 
@@ -37,6 +42,7 @@ def signup(request):
 
 
 def loginuser(request):
+    """Authenticate and log in a user."""
     if request.user.is_authenticated:
         return redirect(to="contacts:contact_view")
 
@@ -56,12 +62,14 @@ def loginuser(request):
 
 @login_required
 def logoutuser(request):
+    """Log out the current user."""
     logout(request)
     return redirect("base")
     # return redirect(to="contacts:contact_view")
 
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    """View for handling password reset requests."""
     template_name = "users/password_reset.html"
     email_template_name = "users/password_reset_email.html"
     html_email_template_name = "users/password_reset_email.html"
@@ -74,6 +82,7 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
 
 @login_required
 def profile(request):
+    """Display and update user profile, password, username, and email."""
     profile_form = ProfileForm(instance=request.user.profile)
     change_password_form = PasswordChangeForm(request.user)
     change_username_form = ChangeUsernameForm()
