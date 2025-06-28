@@ -1,3 +1,7 @@
+"""
+Views for managing notes, tags, and note details.
+"""
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -8,6 +12,7 @@ from .models import Tag, Note
 # Create your views here.
 @login_required
 def notes_view(request):
+    """Display a list of notes, with optional search and tag filtering."""
     query = request.GET.get("q", "")
     search_tag = request.GET.get("tag")
     notes = Note.objects.filter(user=request.user)
@@ -21,6 +26,7 @@ def notes_view(request):
 
 @login_required
 def tag(request):
+    """Create a new tag for the user."""
     if request.method == 'POST':
         form = TagForm(request.POST)
         if form.is_valid():
@@ -36,6 +42,7 @@ def tag(request):
 
 @login_required
 def note(request):
+    """Create a new note for the user, with tags."""
     tags = Tag.objects.filter(user=request.user).all()
 
     if request.method == 'POST':
@@ -57,6 +64,7 @@ def note(request):
 
 @login_required
 def detail(request, note_id):
+    """Display the details of a specific note."""
     note = get_object_or_404(Note, pk=note_id, user=request.user)
 
     return render(request, 'notes/detail.html', {"note": note})
@@ -64,11 +72,13 @@ def detail(request, note_id):
 
 @login_required
 def delete_note(request, note_id):
+    """Delete a specific note for the user."""
     Note.objects.get(pk=note_id, user=request.user).delete()
     return redirect(to='notes:notes')
 
 @login_required
 def edit_note(request, note_id):
+    """Edit an existing note for the user."""
     note = get_object_or_404(Note, id=note_id, user=request.user)
 
     if request.method == 'POST':

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<h1>My profile</h1>
+<div class="profile">
+    <img src="{{ user.profile.avatar.url }}" alt="avatar" />
+    <div class="profile-info">
+        <h3 id="username">Username: {{user.username}}
+            <img class="edit" type="image/png" src="{% static 'icons/edit.svg' %}" onclick="editUsername()">
+        </h3>
+        <form method="post" id="username-form" style="display: none;">
+            {% csrf_token %}
+            <div>
+                <label> Username:
+                    {{ change_username_form.username }}
+                </label>
+            </div>
+            <button class="change-btn" type="submit">Change Username</button>
+        </form>
+
+        <h3 id="email">Email: {{user.email}}
+            <img class="edit" type="image/png" src="{% static 'icons/edit.svg' %}" onclick="editEmail()">
+        </h3>
+        <form method="post" id="email-form" style="display: none;">
+            {% csrf_token %}
+            <div>
+                <label> Email:
+                    {{ change_email_form.email }}
+                </label>
+            </div>
+            <button class="change-btn" type="submit">Change Email</button>
+        </form>
+    </div>
+</div>
+
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="profile-form">
+        <h4>Change Avatar:</h4>
+        <label for="id_avatar" class="upload-btn">Upload Avatar</label>
+        {{ profile_form.avatar }}
+        <span id="file-name">No file selected</span>
+        <span>{{ profile_form.errors.avatar }}</span>
+    </div>
+    <div class="grid">
+        <button class="save-avatar" type="submit">Save Avatar</button>
+    </div>
+</form>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="change-password">
+        <h4>Change Password</h4>
+        <div>
+            <label> Old Password:
+                {{ change_password_form.old_password }}
+            </label>
+            <span>{{ change_password_form.errors.old_password }}</span>
+        </div>
+        <div>
+            <label> New Password:
+                {{ change_password_form.new_password1 }}
+            </label>
+            <span>{{ change_password_form.errors.new_password1 }}</span>
+        </div>
+        <div>
+            <label> New Password Confirmation:
+                {{ change_password_form.new_password2 }}
+            </label>
+            <span>{{ change_password_form.errors.new_password2 }}</span>
+        </div>
+        <div class="grid">
+            <button class="save-avatar" type="submit">Save Password</button>
+        </div>
+    </div>
+</form>
+
+
+
+<script>
+    const input = document.getElementById("id_avatar");
+    const fileName = document.getElementById("file-name");
+
+    input.addEventListener("change", function () {
+        fileName.textContent = input.files[0]?.name || "No file selected";
+    });
+
+    function editUsername() {
+        document.getElementById('username').style.display = 'none';
+        document.getElementById('username-form').style.display = 'flex';
+        document.getElementById('username-form').focus();
+    }
+
+    function editEmail() {
+        document.getElementById('email').style.display = 'none';
+        document.getElementById('email-form').style.display = 'flex';
+        document.getElementById('email-form').focus();
+    }
+</script>
+
+{% endblock content %}

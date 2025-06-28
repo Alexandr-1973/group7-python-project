@@ -3,3 +3,72 @@
     display: none !important;
 }
 
+/* Profile Page Styles */
+.profile {
+    display: flex;
+    gap: 70px;
+    margin-bottom: 50px;
+}
+
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.upload-btn {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #8c9ca4;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-avatar {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #01aaff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    width: fit-content !important;
+}
+
+.edit {
+    width: 5%;
+    cursor: pointer;
+}
+
+.change-btn {
+    padding: 10px;
+    width: fit-content;
+    height: fit-content;
+    margin-bottom: 0px;
+}
+
+#username-form, #email-form {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Messages */
+.messages {
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: larger;
+}
+
+.messages .alert-success {
+    border: 3px solid green;
+    color: white;
+}
+
+.messages .alert-error {
+    border: 3px solid red;
+    color: white;
+}

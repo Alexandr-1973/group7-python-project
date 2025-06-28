@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    
+    {{ event_form.as_p }}
+    
+    <div id="recurrence-fields" style="display:none;">
+        {{ recurring_form.as_p }}
+    </div>
+
+    <button type="submit">Save</button>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const checkbox = document.querySelector('#id_is_recurring');
+    const recurringFields = document.querySelector('#recurrence-fields');
+
+    function toggleRecurringFields() {
+        recurringFields.style.display = checkbox.checked ? 'block' : 'none';
+    }
+
+    checkbox.addEventListener('change', toggleRecurringFields);
+    toggleRecurringFields();
+});
+</script>
+{% endblock %}

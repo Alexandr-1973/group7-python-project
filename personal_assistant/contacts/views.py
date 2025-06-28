@@ -1,3 +1,7 @@
+"""
+Views for managing contacts, including creation, editing, and deletion.
+"""
+
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ContactForm
 from .models import Contact
@@ -8,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def contacts_view(request):
+    """Display a list of contacts, with search and upcoming birthdays filtering."""
     query = request.GET.get("q", "")
     days_str = request.GET.get("days")
 
@@ -37,6 +42,7 @@ def contacts_view(request):
 
 @login_required
 def create_contact(request):
+    """Create a new contact for the user."""
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -51,6 +57,7 @@ def create_contact(request):
 
 @login_required
 def edit_contact(request, contact_id):
+    """Edit an existing contact for the user."""
     contact = get_object_or_404(Contact, id=contact_id, user=request.user)
 
     if request.method == 'POST':
@@ -65,6 +72,7 @@ def edit_contact(request, contact_id):
 
 @login_required
 def delete_contact(request, contact_id):
+    """Delete a contact for the user after confirmation."""
     contact = get_object_or_404(Contact, id=contact_id, user=request.user)
     if request.method == 'POST':
         contact.delete()

@@ -39,7 +39,7 @@
             </li>
 
              <li style="padding-top:0px; padding-bottom:0px">
-                <a class="" href="" style="text-decoration: none; font-size: 16px;">Diary</a>
+                <a class="" href="{% url 'calendar:calendar_view' %}" style="text-decoration: none; font-size: 16px;">Diary</a>
 
             </li>
 
@@ -58,6 +58,7 @@
                     {% endif %}
                     {% if user.is_authenticated %}
                     <li style="padding-top:0px; padding-bottom:0px"><a href="{% url 'users:logout' %}" style="text-decoration: none; font-size: 16px;">Log Out</a></li>
+                    <li style="padding-top:0px; padding-bottom:0px"><a href="{% url 'users:profile' %}" style="text-decoration: none; font-size: 16px;">Profile</a></li>
                     {% endif %}
                 </ul>
             </li>
